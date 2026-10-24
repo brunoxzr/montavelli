@@ -136,6 +136,7 @@ export default function PublicLayout({ children }) {
                             <Icon name="menu" />
                         </button>
                         <nav className="hidden items-center gap-8 lg:flex" aria-label="Principal">
+                            <Link href="/" className="eyebrow py-3 transition-opacity hover:opacity-60">Início</Link>
                             <Link href="/produtos" className="eyebrow py-3 transition-opacity hover:opacity-60">Produtos</Link>
                             {nav?.categories?.slice(0, 4).map((c) => (
                                 <Link key={c.id} href={`/produtos?categoria=${c.slug}`} className="eyebrow py-3 transition-opacity hover:opacity-60">{c.name}</Link>
@@ -149,6 +150,11 @@ export default function PublicLayout({ children }) {
                     </Link>
 
                     <div className="flex items-center justify-end">
+                        {insta && (
+                            <a href={insta} target="_blank" rel="noopener noreferrer" className="hidden h-12 w-12 items-center justify-center text-[21px] lg:flex" aria-label="Instagram">
+                                <Icon name="instagram" />
+                            </a>
+                        )}
                         <button onClick={() => setSearch(true)} className="flex h-12 w-12 items-center justify-center text-[21px]" aria-label="Buscar">
                             <Icon name="search" />
                         </button>
@@ -165,19 +171,37 @@ export default function PublicLayout({ children }) {
             <main id="conteudo" className="flex-1">{children}</main>
 
             <footer className="mt-20 bg-ink text-paper/80 md:mt-28">
-                <div className="container-page py-16 text-center md:py-20">
-                    <Link href="/" aria-label="Início" className="inline-block">
-                        <Logo variant="full" tone="champagne" className="mx-auto w-44 md:w-52" />
-                    </Link>
-                    {lines.length > 0 && (
-                        <div className="mx-auto mt-8 max-w-md space-y-1 font-serif text-lg italic text-champagne/90">
-                            {lines.slice(0, 2).map((l, i) => <p key={i}>{l}</p>)}
-                        </div>
-                    )}
-                    {site.footer_text && <p className="mx-auto mt-6 max-w-lg whitespace-pre-line text-sm leading-relaxed text-paper/60">{site.footer_text}</p>}
+                <div className="container-page grid gap-12 py-16 text-center md:grid-cols-[1.2fr_1fr_1fr] md:items-start md:py-20 md:text-left">
+                    <div>
+                        <Link href="/" aria-label="Início" className="inline-block">
+                            <Logo variant="full" tone="champagne" className="mx-auto w-44 md:mx-0 md:w-52" />
+                        </Link>
+                        {lines.length > 0 && (
+                            <div className="mx-auto mt-8 max-w-md space-y-1 font-serif text-lg italic text-champagne/90 md:mx-0">
+                                {lines.slice(0, 2).map((l, i) => <p key={i}>{l}</p>)}
+                            </div>
+                        )}
+                        {site.footer_text && <p className="mx-auto mt-6 max-w-lg whitespace-pre-line text-sm leading-relaxed text-paper/60 md:mx-0">{site.footer_text}</p>}
+                    </div>
 
-                    {(insta || wa) && (
-                        <div className="mt-10 flex justify-center gap-3">
+                    <nav aria-label="Rodapé">
+                        <p className="eyebrow mb-4 !text-[10px] text-champagne">Loja</p>
+                        <ul className="space-y-1 text-sm">
+                            <li><Link href="/" className="inline-flex min-h-10 items-center hover:text-champagne">Início</Link></li>
+                            <li><Link href="/produtos" className="inline-flex min-h-10 items-center hover:text-champagne">Produtos</Link></li>
+                            {nav?.categories?.slice(0, 5).map((c) => (
+                                <li key={c.id}><Link href={`/produtos?categoria=${c.slug}`} className="inline-flex min-h-10 items-center hover:text-champagne">{c.name}</Link></li>
+                            ))}
+                            {nav?.pages?.map((p) => (
+                                <li key={p.slug}><Link href={`/${p.slug}`} className="inline-flex min-h-10 items-center hover:text-champagne">{p.title}</Link></li>
+                            ))}
+                        </ul>
+                    </nav>
+
+                    {(insta || wa || site.contact_email) && (
+                    <div>
+                        <p className="eyebrow mb-4 !text-[10px] text-champagne">Atendimento</p>
+                        <div className="flex justify-center gap-3 md:justify-start">
                             {insta && (
                                 <a href={insta} target="_blank" rel="noopener noreferrer" aria-label={`Instagram @${instagramHandle(site.instagram)}`} className="flex h-12 w-12 items-center justify-center rounded-full border border-champagne/40 text-xl text-champagne transition-colors hover:bg-champagne hover:text-ink">
                                     <Icon name="instagram" />
@@ -194,16 +218,8 @@ export default function PublicLayout({ children }) {
                                 </a>
                             )}
                         </div>
-                    )}
-
-                    {nav?.pages?.length > 0 && (
-                        <ul className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-1">
-                            {nav.pages.map((p) => (
-                                <li key={p.slug}>
-                                    <Link href={`/${p.slug}`} className="eyebrow inline-flex min-h-11 items-center !text-[10px] text-paper/60 hover:text-champagne">{p.title}</Link>
-                                </li>
-                            ))}
-                        </ul>
+                        {insta && <p className="mt-4 text-sm text-paper/60">@{instagramHandle(site.instagram)}</p>}
+                    </div>
                     )}
                 </div>
                 <div className="border-t border-paper/10">

@@ -15,5 +15,5 @@ export default function Logo({ variant = 'wordmark', tone = 'ink', className = '
     else if (variant === 'monogram') src = light ? logo.monogramLight : logo.monogram;
     else src = (light ? logo.wordmarkLight : logo.wordmark) ?? (light ? logo.champagne : logo.ink);
 
-    return <img src={src} alt={site.store_name} className={`block h-auto select-none ${className}`} draggable="false" />;
+    return <img src={src} alt={site.store_name} className={`block max-w-full select-none ${className}`} draggable="false" />;
 }

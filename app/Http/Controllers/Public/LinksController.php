@@ -16,8 +16,9 @@ class LinksController extends Controller
     public function index(SettingsService $settings): Response
     {
         return Inertia::render('Public/Links', [
-            'links' => LinkItem::where('is_active', true)->orderBy('position')->get(['id', 'title', 'icon', 'kind', 'is_highlighted'])
-                ->filter(fn ($l) => self::resolveUrl($l) !== null)->values(),
+            'links' => LinkItem::where('is_active', true)->orderBy('position')->get()
+                ->filter(fn ($l) => self::resolveUrl($l) !== null)
+                ->map->only('id', 'title', 'icon', 'kind', 'is_highlighted')->values(),
             'avatar' => ImageService::url($settings->get('links_avatar'), 'sm'),
         ])->withViewData(['meta' => [
             'title' => $settings->get('links_title') ?: $settings->get('store_name'),

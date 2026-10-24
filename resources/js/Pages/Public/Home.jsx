@@ -11,20 +11,25 @@ function Intro({ site }) {
     const lines = (site.tagline || '').split('\n').filter(Boolean);
     return (
         <section className="relative overflow-hidden bg-ink text-champagne">
-            <div className="container-page flex min-h-[78svh] flex-col items-center justify-center py-20 text-center md:min-h-[72vh]">
+            <div className="container-page grid min-h-[78svh] items-center gap-12 py-20 md:min-h-[560px] md:grid-cols-2 md:gap-16 md:py-24 lg:min-h-[620px]">
                 <h1 className="sr-only">{site.store_name}</h1>
-                <Logo variant="full" tone="champagne" className="w-56 sm:w-72 md:w-80" />
-                {lines.length > 0 && (
-                    <div className="mt-10 space-y-2">
-                        <p className="font-serif text-[26px] italic leading-tight text-paper sm:text-4xl">{lines[0]}</p>
-                        {lines.slice(1).map((l, i) => (
-                            <p key={i} className="eyebrow !text-[10px] text-champagne/80 sm:!text-[11px]">{l}</p>
-                        ))}
-                    </div>
-                )}
-                <Link href="/produtos" className="btn btn-ghost-light mt-10 min-w-56">
-                    Ver coleção <Icon name="arrow-right" />
-                </Link>
+                <div className="flex justify-center md:order-2">
+                    <Logo variant="full" tone="champagne" className="w-56 sm:w-72 md:w-full md:max-w-[440px]" />
+                </div>
+                <div className="flex flex-col items-center text-center md:items-start md:border-r md:border-champagne/20 md:pr-16 md:text-left">
+                    <p className="eyebrow hidden text-champagne/70 md:block">Coleção</p>
+                    {lines.length > 0 && (
+                        <div className="space-y-3 md:mt-6">
+                            <p className="font-serif text-[28px] italic leading-tight text-paper sm:text-4xl lg:text-6xl">{lines[0]}</p>
+                            {lines.slice(1).map((l, i) => (
+                                <p key={i} className="eyebrow !text-[10px] text-champagne/80 sm:!text-[11px] lg:!text-xs">{l}</p>
+                            ))}
+                        </div>
+                    )}
+                    <Link href="/produtos" className="btn btn-ghost-light mt-10 min-w-56">
+                        Ver coleção <Icon name="arrow-right" />
+                    </Link>
+                </div>
             </div>
         </section>
     );
@@ -101,13 +106,13 @@ function Badges({ badges }) {
     if (active.length === 0) return null;
     return (
         <section className="border-b border-line">
-            <div className={`container-page grid gap-px py-2 ${['grid-cols-1', 'grid-cols-2', 'grid-cols-2 md:grid-cols-3', 'grid-cols-2 md:grid-cols-4'][Math.min(4, active.length) - 1]}`}>
+            <div className="container-page flex flex-wrap items-center justify-center gap-x-14 gap-y-2 py-6 md:py-8">
                 {active.map((b, i) => (
-                    <div key={i} className="flex flex-col items-center gap-3 px-3 py-8 text-center">
-                        <span className="flex h-12 w-12 items-center justify-center rounded-full border border-champagne text-xl">
+                    <div key={i} className="flex items-center gap-4 py-2">
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-champagne text-lg">
                             <Icon name={b.icon} />
                         </span>
-                        <p className="eyebrow !text-[10px] leading-relaxed">{b.text}</p>
+                        <p className="eyebrow !text-[10px] leading-relaxed md:!text-[11px]">{b.text}</p>
                     </div>
                 ))}
             </div>
@@ -188,7 +193,7 @@ export default function Home({ banners, categories, featured, latest }) {
         <>
             {sections.map(render)}
             {nothing && (
-                <section className="container-page mt-16">
+                <section className="container-page mt-16 max-w-3xl md:mt-24">
                     <EmptyState title="A coleção chega em breve">As peças aparecerão aqui assim que forem publicadas.</EmptyState>
                 </section>
             )}
