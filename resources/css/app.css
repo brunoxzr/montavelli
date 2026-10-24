@@ -1,0 +1,158 @@
+﻿@import 'tailwindcss';
+@import 'remixicon/fonts/remixicon.css';
+@import '@fontsource/cormorant-garamond/400.css';
+@import '@fontsource/cormorant-garamond/500.css';
+@import '@fontsource/cormorant-garamond/600.css';
+@import '@fontsource/cormorant-garamond/400-italic.css';
+@import '@fontsource/cinzel/400.css';
+@import '@fontsource/cinzel/500.css';
+@import '@fontsource/inter/300.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+
+/* Tokens da marca (extraÃ­dos da logo). Os valores finais vÃªm das configuraÃ§Ãµes (app.blade.php). */
+@theme inline {
+    --color-ink: var(--brand-ink);
+    --color-champagne: var(--brand-champagne);
+    --color-paper: var(--brand-paper);
+    --color-soft: var(--brand-soft);
+    --color-line: var(--brand-line);
+    --color-muted: color-mix(in srgb, var(--brand-ink) 58%, white);
+    --font-serif: var(--brand-serif);
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+    --brand-ink: #0b0b0b;
+    --brand-champagne: #ccc2b4;
+    --brand-paper: #ffffff;
+    --brand-soft: #f8f6f2;
+    --brand-serif: 'Cormorant Garamond', Georgia, serif;
+    --radius: 0px;
+    --brand-line: color-mix(in srgb, var(--brand-champagne) 55%, white);
+}
+
+@layer base {
+    html {
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+        scroll-behavior: smooth;
+    }
+    body {
+        background: var(--brand-paper);
+        color: var(--brand-ink);
+        font-family: var(--font-sans);
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+    h1, h2, h3, .font-serif {
+        font-family: var(--font-serif);
+        font-weight: 500;
+        letter-spacing: 0.01em;
+    }
+    :focus-visible {
+        outline: 1.5px solid var(--brand-ink);
+        outline-offset: 3px;
+    }
+    ::selection {
+        background: var(--brand-champagne);
+        color: var(--brand-ink);
+    }
+    [x-cloak] { display: none; }
+}
+
+@layer components {
+    .container-page {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10;
+    }
+
+    /* RÃ³tulo pequeno espaÃ§ado, como o nome na logo */
+    .eyebrow {
+        @apply text-[11px] font-medium uppercase;
+        letter-spacing: 0.28em;
+    }
+
+    .btn {
+        @apply inline-flex min-h-12 select-none items-center justify-center gap-2 px-6 text-[13px] font-medium uppercase transition-colors duration-200;
+        letter-spacing: 0.14em;
+        border: 1px solid var(--brand-ink);
+        border-radius: var(--radius);
+    }
+    .btn-solid { background: var(--brand-ink); color: var(--brand-paper); }
+    .btn-solid:hover { background: color-mix(in srgb, var(--brand-ink) 85%, white); }
+    .btn-outline { background: transparent; color: var(--brand-ink); }
+    .btn-outline:hover { background: var(--brand-ink); color: var(--brand-paper); }
+    .btn-champagne { background: var(--brand-champagne); border-color: var(--brand-champagne); color: var(--brand-ink); }
+    .btn-champagne:hover { background: color-mix(in srgb, var(--brand-champagne) 80%, white); }
+    .btn-ghost-light { background: transparent; border-color: var(--brand-champagne); color: var(--brand-champagne); }
+    .btn-ghost-light:hover { background: var(--brand-champagne); color: var(--brand-ink); }
+    .btn-sm { @apply min-h-10 px-4 text-[11px]; }
+    .btn:disabled { @apply cursor-not-allowed opacity-40; }
+
+    .field {
+        @apply min-h-12 w-full bg-white px-4 text-base outline-none transition-colors sm:text-sm;
+        border: 1px solid var(--brand-line);
+        border-radius: var(--radius);
+    }
+    .field:focus { border-color: var(--brand-ink); }
+    textarea.field { @apply py-3 leading-relaxed; }
+    select.field {
+        @apply appearance-none pr-10;
+        background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+        background-position: calc(100% - 20px) 52%, calc(100% - 15px) 52%;
+        background-size: 5px 5px;
+        background-repeat: no-repeat;
+    }
+    .label {
+        @apply mb-2 block text-[11px] font-medium uppercase text-ink;
+        letter-spacing: 0.16em;
+    }
+
+    .card {
+        @apply bg-white;
+        border: 1px solid var(--brand-line);
+        border-radius: var(--radius);
+    }
+
+    .rounded-brand { border-radius: var(--radius); }
+
+    .divider-ornament {
+        @apply flex items-center justify-center gap-4;
+    }
+    .divider-ornament::before,
+    .divider-ornament::after {
+        content: '';
+        @apply h-px w-12;
+        background: var(--brand-champagne);
+    }
+
+    /* ConteÃºdo das pÃ¡ginas institucionais */
+    .prose-page h2 { @apply mt-8 text-2xl; }
+    .prose-page h3 { @apply mt-6 text-xl; }
+    .prose-page p { @apply mt-4; }
+    .prose-page ul { @apply mt-4 list-disc pl-5; }
+    .prose-page ol { @apply mt-4 list-decimal pl-5; }
+    .prose-page a { @apply underline underline-offset-4; }
+    .prose-page blockquote { @apply mt-4 border-l-2 pl-4 italic; border-color: var(--brand-champagne); }
+}
+
+@layer utilities {
+    .scrollbar-none { scrollbar-width: none; }
+    .scrollbar-none::-webkit-scrollbar { display: none; }
+    .pb-safe { padding-bottom: max(0.75rem, env(safe-area-inset-bottom)); }
+}
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-in-left { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+@keyframes slide-in-right { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.animate-fade { animation: fade-in 0.25s ease-out; }
+.animate-left { animation: slide-in-left 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.animate-right { animation: slide-in-right 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.animate-rise { animation: rise 0.35s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
