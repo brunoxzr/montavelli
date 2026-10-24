@@ -9,10 +9,12 @@ const BARE = ['Admin/Login', 'Admin/ForgotPassword', 'Admin/ResetPassword', 'Pub
 
 createInertiaApp({
     title: (title) => title || 'MONTAVELLI',
-    resolve: (name) => {
-        const pages = import.meta.glob('./Pages/**/*.jsx', { eager: true });
-        const page = pages[`./Pages/${name}.jsx`];
-        if (!page) throw new Error(`Página não encontrada: ${name}`);
+    resolve: async (name) => {
+        // cada página vira um arquivo separado (a loja não baixa o código do admin)
+        const pages = import.meta.glob('./Pages/**/*.jsx');
+        const loader = pages[`./Pages/${name}.jsx`];
+        if (!loader) throw new Error(`Página não encontrada: ${name}`);
+        const page = await loader();
         page.default.layout ??= BARE.includes(name)
             ? (p) => p
             : name.startsWith('Admin/')
